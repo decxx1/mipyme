@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Table from '@/src/components/Table'
 import ResponsivePagination from 'react-responsive-pagination';
 
-export default function DataTable({api, jwt}) {
+export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpdateNow}) {
     const [users, setUsers] = useState(null)
     const thead = ['Id', 'Usuario', 'Nombre y apellido', 'E-mail', 'Creado', 'Opciones'];
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,6 +34,13 @@ export default function DataTable({api, jwt}) {
         //console.log('ejecutando useEffect')
         updateUsers(currentPage)
     }, [currentPage])
+
+    useEffect(() => {
+        if(updateNow){
+            updateUsers(currentPage)
+            setUpdateNow(false)
+        }
+      }, [updateNow]);
     return(
         <>
         <Table  
@@ -59,21 +66,22 @@ export default function DataTable({api, jwt}) {
                             {user.created_at}
                         </td>
                         <td>
-                            {/* <div className="dropdown">
+                            <div className="dropdown">
                                 <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i
                                     className="mdi mdi-dots-vertical"></i>
                                 </button>
-                                <div className="dropdown-menu"> */}
-                                <div className='text-center'>
-                                    <span type="button" className="d-inline-block" href="#" onClick={() => handleOpenDialog(user,'Editar usuario', false)}>
-                                        <i className="mdi mdi-pencil-outline me-2"></i>
-                                    </span>
-                                    <span type="button" className="d-inline-block" href="#" onClick={() => handleOpenDialog(user, 'Eliminar usuario', true)}>
-                                        <i className="mdi mdi-trash-can-outline me-2"></i>
-                                    </span>
+                                <div className="dropdown-menu"> 
+                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user,'Editar usuario', false, false)}>
+                                        <i className="mdi mdi-pencil-outline me-2"></i>Editar
+                                    </a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user,'Cambiar contraseña', false, true)}>
+                                        <i className="mdi mdi-lock-outline me-2"></i>Cambiar Contraseña
+                                    </a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user, 'Eliminar usuario', true, false)}>
+                                        <i className="mdi mdi-trash-can-outline me-2"></i>Eliminar
+                                    </a>
                                 </div>
-                                {/* </div>
-                            </div> */}
+                            </div> 
                         </td>
                     </tr>
                     )
@@ -85,18 +93,11 @@ export default function DataTable({api, jwt}) {
                     </tr>
                 ) }
         </Table>
-        {/* <Pagination
-            links={users ? users.links : []}
-            firstPage={users ? users.first_page_url : ''}
-            lastPage={users ? users.last_page_url : ''}
-            nextPage={users ? users.next_page_url : ''}
-            prevPage={users ? users.prev_page_url : ''}
-        /> */}
             <ResponsivePagination
                 total={totalPages ? totalPages : 1}
                 current={currentPage ? currentPage :1}
                 onPageChange={page => handlePageChange(page)}
-                extraClassName="pagination pagination-rounded pagination-outline-primary justify-content-end mt-4"
+                extraClassName="pagination-rounded pagination-outline-primary justify-content-end mt-4"
                 maxWidth={350}
             />
         </>
