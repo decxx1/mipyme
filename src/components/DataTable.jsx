@@ -12,7 +12,7 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
     const [totalPages, setTotalPages] = useState(1);
 
     const updateUsers = async (currentPage) => {
-        const response = await fetch(api + 'api/users?page='+currentPage,{
+        const response = await fetch(api + 'api/users?page='+currentPage+'&perPage='+perPage,{
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
@@ -28,6 +28,9 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
     function handlePageChange(page) {
         setCurrentPage(page);
     }
+    const handleSelectChange = (event) => {
+        setPerPage(event.target.value);
+    }
 
     //ejecutar actualizar usuarios
     useEffect(() => {
@@ -40,9 +43,31 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
             updateUsers(currentPage)
             setUpdateNow(false)
         }
-      }, [updateNow]);
+    }, [updateNow]);
+    useEffect(() => {
+        updateUsers(currentPage)
+        setUpdateNow(false)
+    }, [perPage]);
     return(
         <>
+
+        <div className="col-1 mb-3">
+            <div className="form-floating form-floating-outline">
+                <select
+                    className="form-select"
+                    id="entrys"
+                    name="entrys"
+                    aria-label="entrys"
+                    value="10"
+                    onChange={handleSelectChange}
+                >
+                    <option value="10" >10</option>
+                    <option value="15" >15</option>
+                    <option value="20" >20</option>
+                </select>
+                <label htmlFor="entrys">Entradas</label>
+            </div>
+        </div>
         <Table  
             thead={thead}
         >
@@ -77,6 +102,9 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
                                     <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user,'Cambiar contraseña', false, true)}>
                                         <i className="mdi mdi-lock-outline me-2"></i>Cambiar Contraseña
                                     </a>
+                                    <li>
+                                        <hr className="dropdown-divider"/>
+                                    </li>
                                     <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user, 'Eliminar usuario', true, false)}>
                                         <i className="mdi mdi-trash-can-outline me-2"></i>Eliminar
                                     </a>
@@ -94,8 +122,8 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
                 ) }
         </Table>
             <ResponsivePagination
-                total={totalPages ? totalPages : 1}
-                current={currentPage ? currentPage :1}
+                total={totalPages}
+                current={currentPage}
                 onPageChange={page => handlePageChange(page)}
                 extraClassName="pagination-rounded pagination-outline-primary justify-content-end mt-4"
                 maxWidth={350}
