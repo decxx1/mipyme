@@ -310,7 +310,7 @@ export default function NavBar () {
 
             <div className="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
              
-              <Search />
+              {/* <Search /> */}
 
               <ul className="navbar-nav flex-row align-items-center ms-auto">
                 

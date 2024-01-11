@@ -13,7 +13,7 @@ export default function Dashboard() {
 
 
   return (
-    <div className="container-xxl flex-grow-1 container-p-y">
+    <>
       <h4 className="py-3 mb-4">
         Usuarios
       </h4>
@@ -21,6 +21,6 @@ export default function Dashboard() {
         api={api} 
         jwt={jwt}
       />
-    </div>
+    </>
   )
 }

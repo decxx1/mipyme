@@ -43,29 +43,21 @@ export default function DashboardLayout({ children }) {
       data-assets-path="/assets/"
       data-template="vertical-menu-template"
     >
-      <Script src="/assets/vendor/js/bootstrap.js" />
-      <Script src="/assets/vendor/libs/node-waves/waves.min.js" strategy="lazyOnload" />
-      <Script src="/assets/js/config.js" />
-      <Script src="/assets/vendor/js/helpers.js" />
-      <Script src="/assets/vendor/js/menu.js" />
-      <Script src="/assets/js/main.js" />
+      
       <body className={inter.className}>
         <div className="layout-wrapper layout-content-navbar">
           <div className="layout-container">
             <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
-              
               <HeaderMenu />
               <div className="menu-inner-shadow"></div>
               <LinksMenuLateral />
-             
             </aside>
             <div className="layout-page">
-         
               <NavBar />
-        
-
               <div className="content-wrapper">
-                {children}
+                <div className="container-xxl flex-grow-1 container-p-y">
+                  {children}
+                </div>
                 <Footer></Footer>
               </div>
             </div>
@@ -79,6 +71,12 @@ export default function DashboardLayout({ children }) {
               marginTop: '2rem',
           },
         }}/>
+        <Script src="/assets/vendor/js/bootstrap.js" />
+        <Script src="/assets/vendor/libs/node-waves/waves.min.js" strategy="lazyOnload" />
+        <Script src="/assets/js/config.js" />
+        <Script src="/assets/vendor/js/helpers.js" />
+        <Script src="/assets/vendor/js/menu.js" />
+        <Script src="/assets/js/main.js" />
       </body>
       
     </html>
