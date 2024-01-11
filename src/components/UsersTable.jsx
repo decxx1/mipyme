@@ -16,8 +16,10 @@ export default function UsersTable ({api, jwt}){
         last_name: '',
         role:'guest',
         email: '',
+        phone_code: '',
+        phone_number: '',
     }
-    const [propsDialog, setPropsDialog] = useState({active:false, title:'', isDeleting:false, isChangingPassword:false})
+    const [propsDialog, setPropsDialog] = useState({active:false, title:'', isDeleting:false, isChangingPassword:false, isCreating:false})
     
     const [user, setUser] = useState(userEmpty)
     const [updateNow, setUpdateNow] = useState(false)
@@ -147,8 +149,8 @@ export default function UsersTable ({api, jwt}){
         setRoles(responseData)
     }
     //abrir Dialog
-    const handleOpenDialog = (user, titleDialog, deletingDialog, changingPassword) => {
-        setPropsDialog({active:true, title:titleDialog, isDeleting:deletingDialog, isChangingPassword:changingPassword})
+    const handleOpenDialog = (user, titleDialog, deletingDialog, changingPassword, creating) => {
+        setPropsDialog({active:true, title:titleDialog, isDeleting:deletingDialog, isChangingPassword:changingPassword, isCreating:creating})
         setUser(user)
     }
     //cerrar Dialog
@@ -297,6 +299,64 @@ export default function UsersTable ({api, jwt}){
                                     </div>
                                 </div>
                             </div>
+                            <div className="row">
+                                <div className="col-md-4 mb-4 mt-2">
+                                    <div className="form-floating form-floating-outline">
+                                        <input
+                                            type="text"
+                                            id="phone_code"
+                                            name="phone_code"
+                                            className="form-control"
+                                            placeholder="Nombre"
+                                            value={user.phone_code ? user.phone_code : ''}
+                                            onChange={handleInputChange}
+                                        />
+                                        <label htmlFor="phone_code">Código de país</label>
+                                    </div>
+                                </div>
+                                <div className="col-md-8 mb-4 mt-2">
+                                    <div className="form-floating form-floating-outline">
+                                        <input
+                                            type="text"
+                                            id="phone_number"
+                                            name="phone_number"
+                                            className="form-control"
+                                            placeholder="Apellido"
+                                            value={user.phone_number ? user.phone_number : ''}
+                                            onChange={handleInputChange}
+                                        />
+                                        <label htmlFor="phone_number">Téléfono</label>
+                                    </div>
+                                </div>
+                            </div>
+                            { propsDialog.isCreating && (
+                            <div className="row">
+                                <div className="col-md-6 mb-4 mt-2">
+                                    <div className="form-floating form-floating-outline">
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            className="form-control"
+                                            placeholder="Contraseña"
+                                        />
+                                        <label htmlFor="password">Contraseña</label>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 mb-4 mt-2">
+                                    <div className="form-floating form-floating-outline">
+                                        <input
+                                            type="password"
+                                            id="password_confirmation"
+                                            name="password_confirmation"
+                                            className="form-control"
+                                            placeholder="Repetir contraseña"
+                                        />
+                                        <label htmlFor="password_confirmation">Repetir contraseña</label>
+                                    </div>
+                                </div>
+                            </div>
+                            )}
                         </>
                     )}
                     </DialogContent>
@@ -309,7 +369,7 @@ export default function UsersTable ({api, jwt}){
 
             <div className="card">
                 <div className="card-header">
-                    <button type="button" className="btn btn-primary" onClick={ ()=> handleOpenDialog(userEmpty,'Crear usuario',false,false)}>Crear usuario</button>
+                    <button type="button" className="btn btn-primary" onClick={ ()=> handleOpenDialog(userEmpty,'Crear usuario',false,false,true)}>Crear usuario</button>
                 </div>
                 <div className="card-body">
                     <Suspense>

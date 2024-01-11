@@ -4,7 +4,7 @@ export default function Table ({children, thead}) {
         
         <div className="table-responsive text-nowrap">
             <table className="table table-striped table-bordered">
-                <thead>
+                <thead className="table-primary">
                     <tr>
                     {thead.map( (th,index) => {
                         return(

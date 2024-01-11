@@ -50,7 +50,6 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
     }, [perPage]);
     return(
         <>
-
         <div className="col-1 mb-3">
             <div className="form-floating form-floating-outline">
                 <select
@@ -58,7 +57,7 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
                     id="entrys"
                     name="entrys"
                     aria-label="entrys"
-                    value="10"
+                    value={perPage ? perPage : 10}
                     onChange={handleSelectChange}
                 >
                     <option value="10" >10</option>
@@ -96,16 +95,16 @@ export default function DataTable({api, jwt, handleOpenDialog, updateNow, setUpd
                                     className="mdi mdi-dots-vertical"></i>
                                 </button>
                                 <div className="dropdown-menu"> 
-                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user,'Editar usuario', false, false)}>
+                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user,'Editar usuario', false, false, false)}>
                                         <i className="mdi mdi-pencil-outline me-2"></i>Editar
                                     </a>
-                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user,'Cambiar contraseña', false, true)}>
+                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user,'Cambiar contraseña', false, true, false)}>
                                         <i className="mdi mdi-lock-outline me-2"></i>Cambiar Contraseña
                                     </a>
                                     <li>
                                         <hr className="dropdown-divider"/>
                                     </li>
-                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user, 'Eliminar usuario', true, false)}>
+                                    <a className="dropdown-item" href="#" onClick={() => handleOpenDialog(user, 'Eliminar usuario', true, false, false)}>
                                         <i className="mdi mdi-trash-can-outline me-2"></i>Eliminar
                                     </a>
                                 </div>
